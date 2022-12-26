@@ -4,8 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
-import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -43,22 +43,17 @@ public class RabbitConfiguration {
     }
 
     @Bean
-    public DirectExchange directExchange() {
-        return new DirectExchange("direct-exchange");
+    public TopicExchange topicExchange() {
+        return new TopicExchange("topic-exchange");
     }
 
     @Bean
     public Binding binding1() {
-        return BindingBuilder.bind(myQueue1()).to(directExchange()).with("error");
+        return BindingBuilder.bind(myQueue1()).to(topicExchange()).with("one.*");
     }
 
     @Bean
     public Binding binding2() {
-        return BindingBuilder.bind(myQueue2()).to(directExchange()).with("warning");
-    }
-
-    @Bean
-    public Binding binding3() {
-        return BindingBuilder.bind(myQueue2()).to(directExchange()).with("info");
+        return BindingBuilder.bind(myQueue2()).to(topicExchange()).with("*.second");
     }
 }
