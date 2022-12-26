@@ -12,6 +12,11 @@ public class RabbitMQListener {
 
     @RabbitListener(queues = "myQueue")
     public void processMyQueue(String message) {
-        log.info("Received from myQueue : {}", message);
+        log.info("Received first from myQueue : {}", message);
+    }
+
+    @RabbitListener(queues = "myQueue")
+    public void processMyQueue2(String message) {
+        log.info("Received second from myQueue : {}", message);
     }
 }
