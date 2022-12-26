@@ -7,7 +7,6 @@ import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -33,15 +32,5 @@ public class RabbitConfiguration {
     @Bean
     public Queue myQueue() {
         return new Queue("myQueue");
-    }
-
-
-    @Bean
-    public SimpleMessageListenerContainer messageListenerContainer() {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory());
-        container.setQueueNames("myQueue");
-        container.setMessageListener(message -> log.info("Received from myQueue : " + new String(message.getBody())));
-        return container;
     }
 }
