@@ -10,12 +10,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class RabbitMQListener {
 
-    @RabbitListener(queues = "myQueue")
+    @RabbitListener(queues = "myQueue1")
     public void processMyQueue(String message) {
         log.info("Received first from myQueue : {}", message);
     }
 
-    @RabbitListener(queues = "myQueue")
+    @RabbitListener(queues = "myQueue2")
     public void processMyQueue2(String message) {
         log.info("Received second from myQueue : {}", message);
     }
